@@ -1,3 +1,31 @@
+<?php
+session_start();
+include 'db.php';
+    if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
+        $id = (int)$_COOKIE['remember'];
+        $stmt = $conn -> prepare('SELECT * FROM client where Id_client = ?');
+        $stmt -> bind_param('i', $id);
+        if(!$stmt -> execute()){
+            header('Location: index.php?logout');
+            exit();
+        }
+        else{
+            $result = $stmt -> get_result();
+            $user = $result -> fetch_assoc();
+            if($result -> num_rows > 0){
+                $_SESSION['id_client'] = $id;
+                session_regenerate_id(true);
+                header('Location: index2.php?succes');
+                exit();
+            }
+            else{
+                setcookie('remember', '', time() - 3600,  '/', '', false, true);
+                header('Location: index.php?hello');
+                exit();
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,14 +46,8 @@
             <ul id="ul2">
                 <li><h1>EduTrack</h1></li>
                 <li>
-                    <div id="divsearch">
-                        <input type="search" name="search" placeholder="Recherche ...">
-                        <button name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </div>
-                </li>
-                <li>
-                    <a id="btninsc" href="inscription.html">Insciption</a>
-                    <a id="btnconn" href="login.html">Se connecter</a>
+                    <a id="btninsc" href="inscription.php">Insciption</a>
+                    <a id="btnconn" href="login.php">Se connecter</a>
                 </li>
             </ul>
         </nav>
@@ -33,7 +55,7 @@
             <div class="importhalf">
                 <h1>Bienvenue sur <br><span>EduTrack</span></h1>
                 <h2>Cours, outils intelligents, calendrier et communauté. <br>Tout ce qu’il te faut pour réussir tes études.</h2>
-                <div class="btncontainer"><a href="inscription.html">Commencer</a></div>
+                <div class="btncontainer"><a href="inscription.php">Commencer</a></div>
             </div>
             <div class="slidess">
                 <div id="slide11" class="slide1">
@@ -42,11 +64,6 @@
             </div>
         </div>
     </div>
-    <div id="message1" class="message">
-        <i onclick="del()" id="quit" class="fa-solid fa-xmark"></i>
-        <h1>Veuillez vous inscrire en premier. </h1>
-        <a id="btninsc2" href="inscription.html">Insciption</a>
-    </div> 
     <script>
 
         let quit = document.getElementById('quit');

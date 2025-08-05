@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+html{
+    scroll-behavior: smooth;
+}
 
 body{
     display: flex;
@@ -13,6 +16,7 @@ body{
   font-weight: 600;
   font-style: normal;
   background-color: #0B0C10;
+  align-items: center;
 }
 
 ul{
@@ -119,7 +123,7 @@ a{
     color: #45A29E
 }
 #everything{
-    width: 100%;
+    width: calc(100% - 60px);
     z-index: 20000;
     display: flex;
     flex-direction: column;
@@ -141,7 +145,7 @@ a{
     padding: 5px 10px;
     border-radius: 8px;
     margin-left: 15px;
-
+    cursor: pointer;
 }
 #ul2 #btnhome{
     color: #0B0C10;
@@ -163,23 +167,23 @@ a{
     display: flex;
     align-items: center;
     background-color: #C5C6C7;
-    width: 225px;
-    justify-content: space-between;
+    width: 240px;
+    justify-content: space-evenly;
     padding: 0px 0px;
     border-radius: 8px;
     padding: 2px 5px;
-            color: #1F2833;
+    color: #1F2833;
 
 }
 #divsearch input{
         background-color: #C5C6C7;
-        padding: 5px 15px;
+        padding: 5px 10px;
         border: none;
         outline: none;
         font-size: 0.9rem;
         color: #1F2833;
+        width: 85%;
 }
-
 #divsearch button{
     padding: 5px;
     border: none;
@@ -255,6 +259,8 @@ a{
 }
 #calculs label {
     align-self: self-start;
+        margin-bottom: 5px;
+
 }
 .gendercont{
     width: 100%;

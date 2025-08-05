@@ -3,6 +3,58 @@
     padding: 0;
     box-sizing: border-box;
 }
+html{
+    scroll-behavior: smooth;
+}
+#search_div{
+    position: absolute;
+    top: 0;
+    padding: 0;
+    background-color: #1F2833;
+    border-radius: 12px;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+    max-height: 275px;
+    overflow: auto;
+    scrollbar-width: auto;
+}
+#search_div::-webkit-scrollbar{
+    display: none;
+}
+.searchline {
+    color: #C5C6C7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 0.25px solid black;
+    border-left: 0.25px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    transition: border 0.1s;
+    border-radius: 12px;
+    width: 100%;
+}
+.searchlist{
+    margin-bottom: 5px;
+        width: 100%;
+
+}
+.searchcontainer{
+    padding: 5px;
+        width: 100%;
+
+}
+.searchline:hover{
+    border-top: 0.1px solid #45A29E;
+    border-left: 0.1px solid #45A29E;
+    border-right: 7px solid #45A29E;
+    border-bottom: 7px solid #45A29E;
+}
+
 
 body{
     display: flex;
@@ -13,6 +65,8 @@ body{
   font-weight: 600;
   font-style: normal;
   background-color: #0B0C10;
+  position: relative;
+  min-height: 100vh;
 }
 
 ul{
@@ -44,11 +98,11 @@ a{
     align-items: center;
     width: 60px;
     background-color: #1F2833;
-    height: 105vh;
     transition: width 0.15s ease-in;
     overflow: hidden;
     padding: 20px 0;
     z-index: 30000;
+    height: 100%;
 }
 #header1 li i{
     font-size: 24px;
@@ -151,21 +205,22 @@ margin-left: 10px;
     display: flex;
     align-items: center;
     background-color: #C5C6C7;
-    width: 225px;
-    justify-content: space-between;
+    width: 240px;
+    justify-content: space-evenly;
     padding: 0px 0px;
     border-radius: 8px;
     padding: 2px 5px;
-            color: #1F2833;
+    color: #1F2833;
 
 }
 #divsearch input{
         background-color: #C5C6C7;
-        padding: 5px 15px;
+        padding: 5px 10px;
         border: none;
         outline: none;
         font-size: 0.9rem;
         color: #1F2833;
+        width: 85%;
 }
 
 #divsearch button{

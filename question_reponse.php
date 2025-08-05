@@ -14,11 +14,11 @@
 <body>
     <header id="header1">
         <ul id="ul1">
-            <li><a href="../index.html"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
-            <li><a href="../cours.html"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
-            <li><a href="#"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
+            <li><a href="index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
+            <li><a href="cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
+            <li><a href="outils.php"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
             <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="#"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
+            <li><a href="question_reponse.php"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
             <li><a href="#"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
             <li><a href="#"><span> Paramètres </span><i class="fa-solid fa-gear"></i></a></li>
         </ul>
@@ -34,8 +34,7 @@
                     </div>
                 </li>
                 <li>
-                    <a id="btninsc" href="#">Insciption</a>
-                    <a id="btnconn" href="#">Se connecter</a>
+                    <a id="btninsc">Déconnexion</a>
                 </li>
             </ul>
         </nav>

@@ -14,13 +14,13 @@
 <body>
     <header id="header1">
         <ul id="ul1">
-            <li><a href="index2.html"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
-            <li><a href="cours.html"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
-            <li><a href="outils.html"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
+            <li><a href="index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
+            <li><a href="cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
+            <li><a href="outils.php"><span>Outils d'Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
             <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="#"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
+            <li><a href="question_reponse.php"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
             <li><a href="#"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
-            <li><a href="#"><span> Paramètres </span><i class="fa-solid fa-gear"></i></a></li>
+            <li><a href="#"><span>Paramètres</span><i class="fa-solid fa-gear"></i></a></li>
         </ul>
     </header>
     <div id="everything">
@@ -29,39 +29,41 @@
                 <li><h1>EduTrack</h1></li>
                 <li>
                     <div id="divsearch">
-                        <input type="search" name="search" placeholder="Recherche ...">
-                        <button name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="search" name="search" id="search123" placeholder="Recherche ...">
+                        <button id="searchbtn123" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </li>
                 <li>
-                    <a id="btninsc" href="inscription.html">Insciption</a>
-                    <a id="btnconn" href="#">Se connecter</a>
+                    <a id="btninsc" href="?logout">Déconnexion</a>
                 </li>
             </ul>
         </nav>
         <div id="content">
+            <div id="search_div">
+            </div>
             <h1 id="bigtitle"> Accédez à tous les <span>outils</span> nécessaires pour réussir vos études.</h1>
             <div class="container">
                 <div class="cardsoutils">
                     <h1>Flashcards<br><span> (Cartes mémoire)</span></h1>
                     <i id="i1" class="fa-solid fa-copy"></i>
                     <h2>Cartes question/réponse pour réviser</h2>
-                    <a href="outils/flashcards.html">Cartes Mémoire<i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="outils/flashcards.php">Cartes Mémoire<i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="cardsoutils">
                     <h1>Calcul des Notes</h1>
                     <i id="i2" class="fa-solid fa-pen-to-square"></i>
                     <h2>Un clic pour connaître tes résultats.</h2>
-                    <a href="outils/calcul.html">Générer<i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="outils/calcul.php">Générer<i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="cardsoutils">
                     <h1>Pomodoro</h1>
                     <i id="i3" class="fa-solid fa-stopwatch"></i>
                     <h2>Le minuteur qui booste ta productivité.</h2>
-                    <a href="outils/pomodoro.html">Minuteur<i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="outils/taches.php">Minuteur<i class="fa-solid fa-arrow-right"></i></a>
                 </div> 
             </div>        
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
