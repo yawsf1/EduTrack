@@ -2,17 +2,19 @@
 session_start();
 include 'db.php';
     if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
-        $id = (int)$_COOKIE['remember'];
-        $stmt = $conn -> prepare('SELECT * FROM client where Id_client = ?');
-        $stmt -> bind_param('i', $id);
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
         if(!$stmt -> execute()){
             header('Location: index.php?logout');
             exit();
         }
         else{
             $result = $stmt -> get_result();
-            $user = $result -> fetch_assoc();
+            $user_row = $result -> fetch_assoc();
             if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
                 $_SESSION['id_client'] = $id;
                 session_regenerate_id(true);
                 header('Location: index2.php?success');
@@ -56,13 +58,16 @@ include 'db.php';
             <li><a href="index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
             <li><a href="cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
             <li><a href="outils.php"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
-            <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="question_reponse.php"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
+            <li><a href="taches.php"><span>À faire</span><i class="fa fa-tasks" aria-hidden="true"></i></a></li>
             <li><a href="graphs.php"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
-            <li><a href="#"><span> Paramètres </span><i class="fa-solid fa-gear"></i></a></li>
+            <?php include "delete.php"; ?>
         </ul>
     </header>
     <div id="everything">
+        <?php 
+            $path="register";
+            include "account_delete.php"; 
+        ?>
         <?php
                 if(isset($_SESSION['message'])){
                     echo '
@@ -140,13 +145,15 @@ include 'db.php';
                     </div>
                 </li>
                 <li>
-                    <a href="index2.php?logout" id="btninsc">Déconnexion</a>
+                    <a href="?logout" id="btninsc">Déconnexion</a>
                 </li>
             </ul>
         </div>
         <div id="content">
-            <input id="idclient" type="hidden" value="<?php echo $_SESSION['id_client'] ?>">
+
+            <input id="idclient" type="hidden" name="id_client" value="<?php echo $_SESSION['id_client'] ?>">
             <div id="search_div"></div>
+            
             <?php
             $stmt = $conn -> prepare("SELECT * FROM client WHERE Id_client = ?;");
             $stmt -> bind_param('i', $_SESSION['id_client']);
@@ -155,7 +162,7 @@ include 'db.php';
                 $client = $resultss -> fetch_assoc();
             }
             ?>
-            <h1 id="bigtitle">Bienvenue sur EduTrack, <span><?= strtoupper($client['prenom_client']) ?></span></h1>
+            <h1 id="bigtitle">Bienvenue sur EduTrack, <span><?= strtoupper($client['prenom_client'] ?? "") ?></span></h1>
             <h3 id="smalltitle">Votre plateforme complète pour suivre les progrès, la présence et la performance des étudiants.</h3>
             <div class="section_container">
                 <div class="graphiques">
@@ -181,9 +188,9 @@ include 'db.php';
                     </div>
                     <div id="section2" class="section">
                         <div class="cards1">
-                            <i class="fa-solid fa-calendar"></i>
-                            <p>Calendrier et Rappels</p>
-                            <a href="#"><i class="fa-solid fa-arrow-right"></i>Calendrier</a>
+                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                            <p>À faire</p>
+                            <a href="taches.php"><i class="fa-solid fa-arrow-right"></i>Tâches</a>
                         </div>
                         <div class="cards1">
                             <i class="fa-solid fa-comments"></i>

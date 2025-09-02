@@ -2,28 +2,34 @@
 session_start();
 include 'db.php';
     if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
-        $id = (int)$_COOKIE['remember'];
-        $stmt = $conn -> prepare('SELECT * FROM client where Id_client = ?');
-        $stmt -> bind_param('i', $id);
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
         if(!$stmt -> execute()){
             header('Location: index.php?logout');
             exit();
         }
         else{
             $result = $stmt -> get_result();
-            $user = $result -> fetch_assoc();
+            $user_row = $result -> fetch_assoc();
             if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
                 $_SESSION['id_client'] = $id;
                 session_regenerate_id(true);
-                header('Location: index2.php?succes');
+                header('Location: index2.php?success');
                 exit();
             }
             else{
                 setcookie('remember', '', time() - 3600,  '/', '', false, true);
-                header('Location: index.php?hello');
+                header('Location: index.php?logout');
                 exit();
             }
         }
+    }
+    if(isset($_SESSION['id_client'])){
+        header('Location: index2.php?succefull');
+        exit();
     }
 ?>
 <!DOCTYPE html>
@@ -42,6 +48,73 @@ include 'db.php';
 </head>
 <body id="body111">
     <div id="everything">
+        <?php
+        if(isset($_SESSION['deleted'])){
+            echo '
+                <div id="message1" class="message">
+                    <i onclick="del()" id="quit" class="fa-solid fa-xmark"></i>
+                    <h1 id="messagesignup">'.$_SESSION['deleted'].' </h1>
+                </div> 
+                <style>
+                #message1{
+                    width: 30%;
+                    position: absolute;
+                    min-width: 250px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    bottom: 15px;
+                    right: 70px;
+                    background-color: #1F2833;
+                    color: #C5C6C7;
+                    z-index: 20000;
+                    padding: 30px  20px;
+                    border-radius: 12px;
+                    min-height: 200px;
+                    justify-content: center;
+                }
+                #message1 #messagesignup{
+                    font-size: 1.8rem;
+                    text-align: center;
+                }
+                #quit{
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    height: 30px;
+                    width: 30px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #45A29E;
+                    color: #1F2833;
+                    border-radius: 50%;
+                    margin: 10px;
+                    cursor: pointer;
+                }
+                </style>
+                <script>
+                    let quit = document.getElementById("quit");
+                    let h1111 = document.getElementById("messagesignup");
+                    let div111 = document.getElementById("message1");
+                    div111.style.opacity = "1";
+                    setTimeout(() => {
+                        div111.style.transition = "opacity 0.3s";
+                        div111.style.opacity = "0";
+                    }, 5000);
+                    quit.addEventListener("click", ()=>{
+                        div111.style.display = "none";
+                    });
+                    document.addEventListener("click", (event)=>{
+                        if(div111.style.display !== "none" && !div111.contains(event.target)){
+                            div111.style.display = "none";
+                        }
+                    });
+                </script>
+                ';
+            unset($_SESSION['deleted']);
+        }
+        ?>
         <nav id="navigation">
             <ul id="ul2">
                 <li><h1>EduTrack</h1></li>

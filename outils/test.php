@@ -2,20 +2,22 @@
 session_start();
 include '../db.php';
     if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
-        $id = (int)$_COOKIE['remember'];
-        $stmt = $conn -> prepare('SELECT * FROM client where Id_client = ?');
-        $stmt -> bind_param('i', $id);
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
         if(!$stmt -> execute()){
             header('Location: ../index.php?logout');
             exit();
         }
         else{
             $result = $stmt -> get_result();
-            $user = $result -> fetch_assoc();
+            $user_row = $result -> fetch_assoc();
             if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
                 $_SESSION['id_client'] = $id;
                 session_regenerate_id(true);
-                header('Location: outils/cartes.php?success');
+                header('Location: test.php?success');
                 exit();
             }
             else{
@@ -56,13 +58,16 @@ include '../db.php';
             <li><a href="../index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
             <li><a href="../cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
             <li><a href="../outils.php"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
-            <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="../question_reponse.php"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
-            <li><a href="#"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
-            <li><a href="#"><span> Paramètres </span><i class="fa-solid fa-gear"></i></a></li>
+            <li><a href="../taches.php"><span>À faire</span><i class="fa fa-tasks" aria-hidden="true"></i></a></li>
+            <li><a href="../graphs.php"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
+            <?php include "../delete.php"; ?>
         </ul>
     </header>
     <div id="everything">
+        <?php 
+            $path = "../register.php";
+            include "../account_delete.php"; 
+        ?>
         <nav id="navigation">
             <ul id="ul2">
                 <li><h1>EduTrack</h1></li>
@@ -78,6 +83,8 @@ include '../db.php';
             </ul>
         </nav>
         <div id="content">
+            <input id="idclient" type="hidden" value="<?php echo $_SESSION['id_client'] ?>">
+            <div id="search_div"></div>
             <div id="questionpack2">
                 <h1>La Face avant (<span class="titlesss">Une Question</span>):</h1>
                 <?php
@@ -109,6 +116,7 @@ include '../db.php';
             </div>
         </div>
     </div>
+    <script src="../script.js"></script>
     <script>
         document.getElementById("verifiez").addEventListener('click', () => {
             let answerarea = document.getElementById('reponsearea2');
@@ -116,7 +124,7 @@ include '../db.php';
                 answerarea.style.transition = 'opacity 0.5s';
         });
         document.getElementById('verifiez2').addEventListener('click', () => {
-            fetch(`http://localhost/EduTrack/api.php?action=random`)
+            fetch(`../api.php?action=random`)
             .then(res => res.json())
             .then(res => {
                 console.log(res)
@@ -129,6 +137,7 @@ include '../db.php';
             document.getElementById('reponsearea1').textContent = data.question;
             document.getElementById('reponsearea2').textContent = data.reponse;
         }
+
     </script>
 </body>
 </html>

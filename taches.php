@@ -1,36 +1,41 @@
 <?php
 session_start();
-include '../db.php';
-if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
-    $id = (int)$_COOKIE['remember'];
-    $stmt = $conn -> prepare("SELECT * FROM client WHERE Id_client = ?");
-    $stmt -> bind_param('i', $id);
-    if($stmt -> execute()){
-        $result = $stmt -> get_result();
-        if($result -> num_rows > 0){
-            $_SESSION['id_client'] = $id;
-            session_regenerate_id(true);
-            header('Location: taches.php?succes');
-            exit();        }
-        else{
-            header('Location: ../index.php?ends');
+include 'db.php';
+    if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
+        if(!$stmt -> execute()){
+            header('Location: index.php?logout');
             exit();
         }
+        else{
+            $result = $stmt -> get_result();
+            $user_row = $result -> fetch_assoc();
+            if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
+                $_SESSION['id_client'] = $id;
+                session_regenerate_id(true);
+                header('Location: taches.php?success');
+                exit();
+            }
+            else{
+                setcookie('remember', '', time() - 3600,  '/', '', false, true);
+                header('Location: index.php?logout');
+                exit();
+            }
+        }
     }
-    else{
-        header('Location: ../index.php?ends');
-        exit();
-    }
-}
 if(!isset($_SESSION['id_client'])){
-    header('Location: ../index.php?ends');
+    header('Location: index.php?ends');
     exit();
 }
 if(isset($_GET['logout'])){
     session_unset();
     session_destroy();
     setcookie('remember', '', time() - 3600 , '/', '', false, true);
-    header('Location: ../index.php?ends');
+    header('Location: index.php?ends');
     exit();
 }
 ?>
@@ -51,37 +56,41 @@ if(isset($_GET['logout'])){
 <body>
     <header id="header1">
         <ul id="ul1">
-            <li><a href="../index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
-            <li><a href="../cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
-            <li><a href="../outils.php"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
-            <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="../graphs.php"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
-            <li><a href="#"><span> Paramètres </span><i class="fa-solid fa-gear"></i></a></li>
+            <li><a href="index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
+            <li><a href="cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
+            <li><a href="outils.php"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
+            <li><a href="taches.php"><span>À faire</span><i class="fa fa-tasks" aria-hidden="true"></i></a></li>
+            <li><a href="graphs.php"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
+            <?php include "delete.php"; ?>
         </ul>
     </header>
     <div id="everything">
+        <?php 
+            $path = "register";
+            include "account_delete.php"; 
+        ?>
         <nav id="navigation">
             <ul id="ul2">
                 <li><h1>EduTrack</h1></li>
                 <li>
                     <div id="divsearch">
-                        <input type="search" name="search" placeholder="Recherche ...">
-                        <button name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="search" id="search123" name="search" placeholder="Recherche ...">
+                        <button id="searchbtn123" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </li>
                 <li>
-                    <a id="btninsc" href="?logout">Déconnexion</a>
+                    <a href="?logout" id="btninsc" >Déconnexion</a>
                 </li>
             </ul>
         </nav>
         <div id="content">
-            
             <div class="container">
+                <input id="idclient" type="hidden" value="<?php echo $_SESSION['id_client'] ?>">
+                <div id="search_div"></div>
                 <div id="lines4">
                     <h2>Tâches</h2>
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
-                
                 <div id="lines5">
                     <div id="container_of_tasks_all" class="tasklistss">
                         <?php
@@ -95,7 +104,7 @@ if(isset($_GET['logout'])){
                                         '
                                         <div data-id="'.$task['id_tache'].'" class="tasks2" id="task1111">
 
-                                            <h3  id="adddd" class="add"><span><i class="fa-solid fa-check"></i>'.$task['tache'].'</span><span class="btn_task_fini"><button class="add_task_done">une tache fini</button><span class="tachessss">'.$task['n_tache'].'<i class="fa-solid fa-xmark"></i><i id="ellipsis" data-class="dots" class="fa-solid fa-ellipsis-vertical"></i></span></span></h3>
+                                            <h3  id="adddd" class="add"><span><i class="fa-solid fa-check"></i><span class="all_tasks_exists_here">'.$task['tache'].'</span></span><span class="btn_task_fini"><button class="add_task_done">une tache fini</button><span class="tachessss"><span class="number_of_spans_here">'.$task['n_tache'].'</span><i class="fa-solid fa-xmark"></i><i id="ellipsis" data-class="dots" class="fa-solid fa-ellipsis-vertical"></i></span></span></h3>
                                             <div class="modifications">
                                                 <div id="inputs_div">
                                                     <input type="text" name="taskname" value="'.$task['tache'].'" id="taskname" class="taskname" placeholder="Nom de la tache ..." required>
@@ -116,6 +125,7 @@ if(isset($_GET['logout'])){
                                 }
                             }
                         ?>
+                        
                     </div>
                     <div class="tasks" id="task2">
                         <h3 id="addddd" class="add"><i id="add-i" class="fa-solid fa-add"></i><span id="ajoute_tache">ajouter une tâche</span></h3>
@@ -135,7 +145,6 @@ if(isset($_GET['logout'])){
                         </div>
                     </div>
                 </div>
-
                 <div id="lines6">
                 </div>
                 <div id="lines7">
@@ -151,8 +160,8 @@ if(isset($_GET['logout'])){
                 </div>
             </div>        
         </div>
-        
     </div>
+    <script src="script.js"></script>
     <script>
         let container_task = document.getElementById('task2');
         let add_button = document.getElementById('addddd');
@@ -200,26 +209,27 @@ if(isset($_GET['logout'])){
                 function add_task(data){
                     let all_tasks_exist = document.createElement('div');
                     all_tasks_exist.classList.add('tasks2');
+                    all_tasks_exist.setAttribute('data-id', data.id_tache);
                     document.getElementById('container_of_tasks_all').appendChild(all_tasks_exist);
                     all_tasks_exist.innerHTML = 
                     `
-                        <h3  id="adddd" class="add"><span><i class="fa-solid fa-check"></i>${data.task_name}</span><span class="btn_task_fini"><button class="add_task_done">une tache fini</button><span class="tachessss">${data.nombre_tasks}<i class="fa-solid fa-xmark"></i><i id="ellipsis" data-class="dots" class="fa-solid fa-ellipsis-vertical"></i></span></span></h3>
-                        <div class="div_adding_task2">
+                        <h3  id="adddd" class="add"><span><i class="fa-solid fa-check"></i><span class="all_tasks_exists_here">${data.task_name}</span></span><span class="btn_task_fini"><button class="add_task_done">une tache fini</button><span class="tachessss"><span class="number_of_spans_here">${data.nombre_tasks}</span><i class="fa-solid fa-xmark"></i><i id="ellipsis" data-class="dots" class="fa-solid fa-ellipsis-vertical"></i></span></span></h3>
+                        <div class="modifications">
                             <div id="inputs_div">
-                                <input type="text" name="taskname" id="taskname" placeholder="Nom de la tache ..." required>
+                                <input type="text" name="taskname" value="${data.task_name}" id="taskname" class="taskname" placeholder="Nom de la tache ..." required>
                             </div>
-                            <div id="buttons_container" class="buttons_container">
-                                <input type="text" value="1" id="nombre_cycle" class="nombre_cycle3" >
-                                <button id="up" class="btnup"><i class="fa-solid fa-caret-up"></i></button>
-                                <button id="down" class="btnsown"><i class="fa-solid fa-caret-down"></i></button>
+                            <div id="buttons_container" class="buttons_container2">
+                                <input type="text" value="${data.nombre_tasks}" id="nombre_cycle" class="nombre_cycle10">
+                                <button id="up" class="upbtn22"><i class="fa-solid fa-caret-up"></i></button>
+                                <button id="down" class="downbtn22"><i class="fa-solid fa-caret-down"></i></button>
                             </div>
                             <div id="add_or_no">
-                                <button type="submit" class="enreg" id="enreg">Enregister</button>
+                                <button type="submit" id="enreg" class="enreg">Enregister</button>
                                 <button type="reset" class="cancel" id="cancel">Annuler</button>
-                            </div>
+                            </div>                                            
                         </div>`;
                 }
-                fetch('http://localhost/edutrack/api.php', {
+                fetch('api.php', {
                     method: 'POST',
                     headers: {
                         'Content-type': 'application/json',
@@ -240,57 +250,11 @@ if(isset($_GET['logout'])){
 
 
 
-        document.querySelectorAll('.fa-xmark').forEach(xmark => {
-            xmark.addEventListener('click', () => {
-                let h3_container = xmark.closest('.tasks2');
-                console.log(h3_container.dataset.id);
-                function delete_tache(){
-                    h3_container.style.display = 'none';
-                }
-                fetch('http://localhost/EduTrack/api.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        action : 'delete_task',
-                        id_task : h3_container.dataset.id,
-                    })
-                })
-                .then(res => res.json())
-                .then(res => {
-                    console.log(res);
-                    if(res.status === 'success'){
-                        delete_tache();
-                        console.log(h3_container.style.display);
-                    }
-                })
-            });
-        })
 
 
-        document.querySelectorAll('.tasks2 .fa-ellipsis-vertical').forEach( modify => {
-            modify.addEventListener('click', () => {
-                let container_modify = modify.closest('.tasks2');
-                let adding = container_modify.querySelector('.add');
-                let modifs = container_modify.querySelector('.modifications');
-                document.querySelectorAll('.modifications').forEach(mods => {
-                    let container_modify = mods.closest('.tasks2');
-                    let adding = container_modify.querySelector('.add');
-                    let modifs = container_modify.querySelector('.modifications');
-                    mods.style.display = 'none';
-                    container_modify.style.minHeight = 'auto';
-                    modify.style.display = 'flex';
-                    modifs.style.display = 'none';
-                    adding.style.display = 'flex';
-                    
-                });
-                modifs.style.display = 'flex';
-                modify.style.display = 'flex';
-                adding.style.display = 'none';
-                container_modify.style.minHeight = '170px';
-            });
-        });
+
+
+
         let cnsl_btn = document.querySelectorAll('.cancel');
         cnsl_btn.forEach(bnt_c => {
             bnt_c.addEventListener('click', () => {
@@ -316,7 +280,6 @@ if(isset($_GET['logout'])){
 
         document.querySelectorAll('.upbtn22').forEach(btnup2 => {
             btnup2.addEventListener('click', () => {
-
                 let inputs_n = btnup2.closest('.buttons_container2');
                 let input_value = inputs_n.querySelector('.nombre_cycle10');
                 let count2 = Number(input_value.value);
@@ -365,7 +328,7 @@ if(isset($_GET['logout'])){
                 console.log(new_tache);
                 console.log(new_n_tache);
                 console.log(tache_id);
-                fetch('http://localhost/edutrack/api.php', {
+                fetch('api.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type':'application/json'
@@ -380,22 +343,27 @@ if(isset($_GET['logout'])){
                 .then(res => res.json())
                 .then(res => {
                     console.log(res)
-                    div_container_task.querySelector('.add').innerHTML = `<span><i class="fa-solid fa-check"></i>${new_tache}</span><span class="btn_task_fini"><button class="add_task_done">une tache fini</button><span class="tachessss">${new_n_tache}<i class="fa-solid fa-xmark"></i><i id="ellipsis" data-class="dots" class="fa-solid fa-ellipsis-vertical"></i></span></span>`;
-                })
+                    div_container_task.querySelector('.all_tasks_exists_here').innerHTML = new_tache
+                    div_container_task.querySelector('.number_of_spans_here').textContent = new_n_tache;
+                    
+                    let modifications = div_container_task.querySelector('.modifications');
+                    let add_div = div_container_task.querySelector('.add');
+                    modifications.style.display = 'none';
+                    add_div.style.display = 'flex';
+                    div_container_task.style.minHeight = 'auto';
+                });
             })
         });
 
-        
-        document.querySelectorAll('.add_task_done').forEach(btn_task_done => {
-            let all_container = btn_task_done.closest('.tasks2');
-            let btn_container = all_container.querySelector('.buttons_container2');
-            let input_field = all_container.querySelector('.nombre_cycle10');
-            btn_task_done.addEventListener('click', () =>{
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add_task_done')) {
+                let all_container = e.target.closest('.tasks2');
+                let input_field = all_container.querySelector('.nombre_cycle10');
                 if(Number(input_field.value) > 1){
                     input_field.value = Number(input_field.value) - 1;
                     console.log(input_field.value);
                     let container_id = all_container.dataset.id;
-                    fetch('http://localhost/edutrack/api.php', {
+                    fetch('api.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type':'application/json'
@@ -408,12 +376,13 @@ if(isset($_GET['logout'])){
                     })
                     .then(res => res.json())
                     .then(res => {
-                        all_container.querySelector('.tachessss').innerHTML = `${Number(input_field.value)}<i class="fa-solid fa-xmark"></i><i id="ellipsis" data-class="dots" class="fa-solid fa-ellipsis-vertical"></i>`;
+                        console.log(res)
+                        all_container.querySelector('.number_of_spans_here').textContent = Number(input_field.value);
                     })
                 }
                 else{
                     let container_id = all_container.dataset.id;
-                    fetch('http://localhost/edutrack/api.php', {
+                    fetch('api.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type':'application/json'
@@ -425,13 +394,52 @@ if(isset($_GET['logout'])){
                     })
                     .then(res => res.json())
                     .then(res => {
-                        let icon_style = all_container.querySelector('.fa-check');
-                        console.log(icon_style.style.color );
                         all_container.style.display = 'none';
                     })
                 }
-            })
-        })
+            }
+            
+            if (e.target.classList.contains('fa-ellipsis-vertical') && e.target.closest('.tasks2')) {
+                let container_modify = e.target.closest('.tasks2');
+                let adding = container_modify.querySelector('.add');
+                let modifs = container_modify.querySelector('.modifications');
+                
+                document.querySelectorAll('.modifications').forEach(mods => {
+                    let other_container = mods.closest('.tasks2');
+                    let other_adding = other_container.querySelector('.add');
+                    mods.style.display = 'none';
+                    other_container.style.minHeight = 'auto';
+                    other_adding.style.display = 'flex';
+                });
+                
+                modifs.style.display = 'flex';
+                adding.style.display = 'none';
+                container_modify.style.minHeight = '170px';
+            }
+            
+            if (e.target.classList.contains('fa-xmark')) {
+                let h3_container = e.target.closest('.tasks2');
+                console.log(h3_container.dataset.id);
+                fetch('api.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action : 'delete_task',
+                        id_task : h3_container.dataset.id,
+                    })
+                })
+                .then(res => res.json())
+                .then(res => {
+                    console.log(res);
+                    if(res.status === 'success'){
+                        h3_container.style.display = 'none';
+                    }
+                })
+            }
+        });
+        
     </script>
 </body>
 </html>

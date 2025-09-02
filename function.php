@@ -32,24 +32,49 @@ function deletedata($data, $conn){
         echo json_encode(['status' => 'failed', 'message' => $e -> getMessage()]);
     }
 }
-function searchdata($data, $conn){
+function searchdata($data, $conn) {
     $input = $data['search_content'];
-    $inputlike = $input.'%';
-    $stmt = $conn -> prepare('SELECT nom_cours, date_post, id_cours FROM cours WHERE nom_cours like ? and id_client = ?;');
-    $stmt -> bind_param('si', $inputlike, $data['id']);
-    if($stmt -> execute()){
-        $cours = array();
-        $result = $stmt -> get_result();
-        while($cour = $result -> fetch_assoc()){
-            $cours[] = $cour;
-        }
-        echo json_encode(['data' => $cours, 'status' => 'succes', 'message' => 'this is the cours']);
+    $inputlike = '%'.$input . '%'; 
+    $cours = [];
+    $cartes = [];
+    $taches = [];
+
+    $stmt = $conn->prepare('SELECT nom_cours, date_post, id_cours FROM cours WHERE nom_cours LIKE ? AND id_client = ? LIMIT 4;');
+    $stmt->bind_param('si', $inputlike, $data['id']);
+    if ($stmt->execute()) { 
+        $result = $stmt->get_result(); 
+        while ($row = $result->fetch_assoc()) { 
+            $cours[] = $row; 
+        } 
     }
-    else{
-        echo json_encode(['status'=>'failed', 'message' => "post doesn't exist"]);
+    $stmt->close();
+
+    $stmt2 = $conn->prepare('SELECT question, date, id_carte FROM cartes WHERE question LIKE ? AND id_client = ? LIMIT 4;');
+    $stmt2->bind_param('si', $inputlike, $data['id']);
+    if ($stmt2->execute()) { 
+        $result2 = $stmt2->get_result(); 
+        while ($row = $result2->fetch_assoc()) { 
+            $cartes[] = $row; 
+        } 
     }
-    $stmt -> close();
+    $stmt2->close();
+
+    $stmt3 = $conn->prepare('SELECT tache, date, id_tache FROM tache WHERE tache LIKE ? AND id_client = ? LIMIT 4;');
+    $stmt3->bind_param('si', $inputlike, $data['id']);
+    if ($stmt3->execute()) { 
+        $result3 = $stmt3->get_result(); 
+        while ($row = $result3->fetch_assoc()) { 
+            $taches[] = $row; 
+        } 
+    }
+    $stmt3->close();
+
+    echo json_encode(empty($cours) && empty($cartes) && empty($taches) ? 
+    ['data1' => '', 'data2' => '', 'data3' => '','status' => 'failed', 'message' => 'No matching data found']
+    : ['data1' => $cours, 'data2' => $cartes, 'data3' => $taches, 'status' => 'success', 'message' => 'Data retrieved successfully']
+    );
 }
+
 
 
 function deletecarte($data, $conn){
@@ -198,4 +223,7 @@ function update_n_task($data, $conn, $id_client2){
     }
     $stmt -> close();
 }
+
+
+
 ?>

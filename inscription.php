@@ -1,5 +1,39 @@
 <?php
 session_start();
+include 'db.php';
+    if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
+        if(!$stmt -> execute()){
+            header('Location: index.php?logout');
+            exit();
+        }
+        else{
+            $result = $stmt -> get_result();
+            $user_row = $result -> fetch_assoc();
+            if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
+                $_SESSION['id_client'] = $id;
+                session_regenerate_id(true);
+                header('Location: index2.php?success');
+                exit();
+            }
+            else{
+                setcookie('remember', '', time() - 3600,  '/', '', false, true);
+                header('Location: index.php?logout');
+                exit();
+            }
+        }
+    }
+    if(isset($_SESSION['id_client'])){
+        header('Location: index2.php?succefull');
+        exit();
+    }
+
+
+
     if(empty($_SESSION['csrf'])){
         $_SESSION['csrf'] = bin2hex(random_bytes(32));
     }
@@ -194,5 +228,7 @@ session_start();
     homme.addEventListener('click',() => { anything(homme ,femme) });
     femme.addEventListener('click',() => { anything(femme, homme) });
     </script>
+        <script src="script.js"></script>
+
 </body>
 </html>

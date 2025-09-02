@@ -20,12 +20,46 @@ html{
     max-height: 275px;
     overflow: auto;
     scrollbar-width: auto;
+    z-index: 900000;
 }
 #search_div::-webkit-scrollbar{
     display: none;
 }
 .searchline {
     color: #C5C6C7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 0.25px solid black;
+    border-left: 0.25px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    transition: border 0.1s;
+    border-radius: 12px;
+    width: 100%;
+}
+small{
+    margin-left: 10px;
+}
+.searchline2 {
+    background-color: cadetblue;
+    color: #0B0C10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 0.25px solid black;
+    border-left: 0.25px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    transition: border 0.1s;
+    border-radius: 12px;
+    width: 100%;
+}
+.searchline3 {
+    background-color: #C5C6C7;
+    color: #0B0C10;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,7 +80,6 @@ html{
 .searchcontainer{
     padding: 5px;
         width: 100%;
-
 }
 .searchline:hover{
     border-top: 0.1px solid #45A29E;
@@ -54,7 +87,18 @@ html{
     border-right: 7px solid #45A29E;
     border-bottom: 7px solid #45A29E;
 }
-
+.searchline2:hover{
+    border-top: 0.1px solid #0B0C10;
+    border-left: 0.1px solid #0B0C10;
+    border-right: 7px solid #0B0C10;
+    border-bottom: 7px solid #0B0C10;
+}
+.searchline3:hover{
+    border-top: 0.1px solid #0B0C10;
+    border-left: 0.1px solid #0B0C10;
+    border-right: 7px solid #0B0C10;
+    border-bottom: 7px solid #0B0C10;
+}
 
 body{
     display: flex;
@@ -241,10 +285,14 @@ margin-left: 10px;
     color: #C5C6C7;
 }
 .queanscont{
-    width: 100%;
     display: flex;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    width: 100%;
+        margin-top: 10px;
+        position: relative;
+    min-height: 400px;
+    position: relative;
 }
 .big_title{
     width: 100%;

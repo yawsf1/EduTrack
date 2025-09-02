@@ -20,12 +20,46 @@ html{
     max-height: 275px;
     overflow: auto;
     scrollbar-width: auto;
+    z-index: 900000;
 }
 #search_div::-webkit-scrollbar{
     display: none;
 }
 .searchline {
     color: #C5C6C7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 0.25px solid black;
+    border-left: 0.25px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    transition: border 0.1s;
+    border-radius: 12px;
+    width: 100%;
+}
+small{
+    margin-left: 10px;
+}
+.searchline2 {
+    background-color: cadetblue;
+    color: #0B0C10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-top: 0.25px solid black;
+    border-left: 0.25px solid black;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    transition: border 0.1s;
+    border-radius: 12px;
+    width: 100%;
+}
+.searchline3 {
+    background-color: #C5C6C7;
+    color: #0B0C10;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -46,7 +80,6 @@ html{
 .searchcontainer{
     padding: 5px;
         width: 100%;
-
 }
 .searchline:hover{
     border-top: 0.1px solid #45A29E;
@@ -54,8 +87,18 @@ html{
     border-right: 7px solid #45A29E;
     border-bottom: 7px solid #45A29E;
 }
-
-
+.searchline2:hover{
+    border-top: 0.1px solid #0B0C10;
+    border-left: 0.1px solid #0B0C10;
+    border-right: 7px solid #0B0C10;
+    border-bottom: 7px solid #0B0C10;
+}
+.searchline3:hover{
+    border-top: 0.1px solid #0B0C10;
+    border-left: 0.1px solid #0B0C10;
+    border-right: 7px solid #0B0C10;
+    border-bottom: 7px solid #0B0C10;
+}
 body{
     display: flex;
     flex-direction: column;
@@ -425,6 +468,20 @@ border-radius: 12px;
     border-radius: 8px;
     flex-grow: 1;
 }
+.calculator22{
+    width: 78%;
+    background-color: #1F2833;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    padding: 10px;
+    column-gap: 10px;
+    row-gap: 10px;
+    border-radius: 8px;
+    flex-grow: 1;
+    display: none;
+}
 .calculator2{
     display: flex;
     flex-direction: column;
@@ -452,7 +509,9 @@ border-radius: 12px;
     align-items: center;
     border-radius: 8px;
     transition: background-color 0.4s, color 0.4s;
-
+}
+#scientific{
+    display: none;
 }
 .calculator2 .button_mode button:hover{
     background-color: #0B0C10;
@@ -473,7 +532,23 @@ border-radius: 12px;
   align-items: center;
   justify-content: center;
       flex-grow: 1;
-      flex-basis: 65px;
+      flex-basis: 75px;
+}
+.calculator22 button{
+        min-height: 55px;
+    font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: #C5C6C7;
+  color: #1F2833;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+      flex-grow: 1;
 }
 .results{
     width: 100%;
@@ -516,6 +591,28 @@ border-radius: 12px;
     background-color: #0B0C10;
     color: #45A29E;
 }
+
+
+
+
+#equal2{
+    background-color: #45A29E;
+    color: #1F2833;
+    transition: color 0.4s, background-color 0.4s;
+}
+#one, #two, #three, #fou, #fiv, #six, #eig, #nin, #sev{
+    background-color: #0B0C10;
+    color: #45A29E;
+    transition: color 0.4s, background-color 0.4s;
+} 
+#one:hover, #two:hover, #three:hover, #fou:hover, #fiv:hover, #six:hover, #eig:hover, #nin:hover, #sev:hover{
+    background-color: #45A29E;
+    color: #1F2833;
+} 
+#equal2:hover{
+    background-color: #0B0C10;
+    color: #45A29E;
+}
 #del:hover{
     background-color: #0B0C10;
     color: #45A29E;
@@ -523,15 +620,26 @@ border-radius: 12px;
 #del{
     background-color: #45A29E;
     color: #1F2833;
-        transition: color 0.4s, background-color 0.4s;
-
+    transition: color 0.4s, background-color 0.4s;
 }
-
-#pi, #xracine3, #exp, #fact, #deux_puix, #ln, #ex, #par1, #par2{
-    display: none;
+#del2{
+    background-color: #45A29E;
+    color: #1F2833;
+    transition: color 0.4s, background-color 0.4s;
 }
-
-
+#del2:hover{
+    background-color: #0B0C10;
+    color: #45A29E;
+}
+#one2, #two2, #three2, #fou2, #fiv2, #six2, #eig2, #nin2, #sev2{
+    background-color: #0B0C10;
+    color: #45A29E;
+    transition: color 0.4s, background-color 0.4s;
+} 
+#one2:hover, #two2:hover, #three2:hover, #fou2:hover, #fiv2:hover, #six2:hover, #eig2:hover, #nin2:hover, #sev2:hover{
+    background-color: #45A29E;
+    color: #1F2833;
+} 
 
 @media (max-width: 1124px) {
 

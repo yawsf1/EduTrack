@@ -1,43 +1,43 @@
 <?php
 session_start();
 include 'db.php';
-
-if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
-    $id = (int)$_COOKIE['remember'];
-    $stmt = $conn -> prepare('SELECT * FROM client WHERE Id_client = ?;');
-    $stmt -> bind_param('i', $id);
-    if(!$stmt -> execute()){
-        header('Location: index.php?select');
-        exit();
-    }
-    else{
-        $result = $stmt -> get_result();
-        $user = $result -> fetch_assoc();
-        if($result -> num_rows > 0){
-            $_SESSION['id_client'] = $id;
-            session_regenerate_id(true);
-            header('Location: cours.php?success');
-            exit();
-        }
-        else{
-            setcookie('remember', '', time() - 3600,  '/', '', false, true);
+    if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
+        if(!$stmt -> execute()){
             header('Location: index.php?logout');
             exit();
         }
+        else{
+            $result = $stmt -> get_result();
+            $user_row = $result -> fetch_assoc();
+            if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
+                $_SESSION['id_client'] = $id;
+                session_regenerate_id(true);
+                header('Location: cours.php?success');
+                exit();
+            }
+            else{
+                setcookie('remember', '', time() - 3600,  '/', '', false, true);
+                header('Location: index.php?logout');
+                exit();
+            }
+        }
     }
-}
-if(!isset($_SESSION['id_client'])){
-    header('Location: index.php?sessionend');
-    exit();
-}
-
-if(isset($_GET['logout'])){
-    setcookie('remember', '', time() - 3600, '', '/', false, true);
-    session_unset();
-    session_destroy();
-    header('Location: index.php?ends');
-    exit();
-}
+    if(!isset($_SESSION['id_client'])){
+        header('Location: index.php?sessionend');
+        exit();
+    }
+    if(isset($_GET['logout'])){
+        session_unset();
+        session_destroy();
+        setcookie('remember', '', time() - 3600,  '/', '', false, true);
+        header('Location: index.php?ends');
+        exit();
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,13 +58,16 @@ if(isset($_GET['logout'])){
             <li><a href="index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
             <li><a href="cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
             <li><a href="outils.php"><span>Outils d’Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
-            <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="question_reponse.php"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
-            <li><a href="#"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
-            <li><a href="#"><span> Paramètres </span><i class="fa-solid fa-gear"></i></a></li>
+            <li><a href="taches.php"><span>À faire</span><i class="fa fa-tasks" aria-hidden="true"></i></a></li>
+            <li><a href="graphs.php"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
+            <?php include "delete.php"; ?>
         </ul>
     </header>
     <div id="everything">
+        <?php 
+            $path = "register";
+            include "account_delete.php"; 
+        ?>        
         <nav id="navigation">
             <ul id="ul2">
                 <li><h1>EduTrack</h1></li>
@@ -75,13 +78,15 @@ if(isset($_GET['logout'])){
                     </div>
                 </li>
                 <li>
-                    <a id="btninsc">Déconnexion</a>
+                    <a id="btninsc" href="?logout">Déconnexion</a>
                 </li>
             </ul>
         </nav>
         <div id="content">
+            
             <input id="idclient" type="hidden" value="<?php echo $_SESSION['id_client'] ?>">
             <div id="search_div"></div>
+
             <form id="formcours" action="register.php" method="post" enctype="multipart/form-data">
                 <div id="formsubmitting">
                     <div class="sections">
@@ -105,6 +110,7 @@ if(isset($_GET['logout'])){
                             <h4>Importer des images, pdfs ...</h4>
                             <label for="importcours" class="custombtn">Importer des images, pdfs ...<i class="fa-solid fa-upload"></i></label>
                             <input type="file" id="importcours" name="importcours"  placeholder="Importer un fichier" > 
+                            <h4 class="name_file">Aucune fichier !</h4>
                         </div>
                     </div>
                 </div>
@@ -113,5 +119,21 @@ if(isset($_GET['logout'])){
         </div>
     </div>
     <script src="script.js"></script>
+    <script>
+        let mesg = document.querySelector(".name_file");
+        let imports = document.querySelector("#importcours");
+        imports.addEventListener('change', () => {
+            let file = imports.files[0];
+            if(file){
+                mesg.textContent = `Nom de fichier: ${file.name}`;
+                console.log(file);
+            }
+            else{
+                mesg.textContent = 'Aucune fichier !';
+            }
+        })
+
+    </script>
+
 </body>
 </html>

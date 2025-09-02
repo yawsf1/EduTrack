@@ -1,3 +1,45 @@
+<?php
+session_start();
+include 'db.php';
+    if(isset($_COOKIE['remember']) && !isset($_SESSION['id_client'])){
+        $cookie_token = $_COOKIE['remember'];
+        $token = hash('sha256',$cookie_token);
+        $stmt = $conn -> prepare('SELECT * FROM tokens where token = ? AND expire_date >= NOW();');
+        $stmt -> bind_param('s', $token);
+        if(!$stmt -> execute()){
+            header('Location: index.php?logout');
+            exit();
+        }
+        else{
+            $result = $stmt -> get_result();
+            $user_row = $result -> fetch_assoc();
+            if($result -> num_rows > 0){
+                $id = $user_row['id_client'];
+                $_SESSION['id_client'] = $id;
+                session_regenerate_id(true);
+                header('Location: index2.php?success');
+                exit();
+            }
+            else{
+                setcookie('remember', '', time() - 3600,  '/', '', false, true);
+                header('Location: index.php?logout');
+                exit();
+            }
+        }
+    }
+    if(!isset($_SESSION['id_client'])){
+        header('Location: index.php?sessionend');
+        exit();
+    }
+    if(isset($_GET['logout'])){
+        session_unset();
+        session_destroy();
+        setcookie('remember', '', time() - 3600,  '/', '', false, true);
+        header('Location: index.php?ends');
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,53 +59,51 @@
             <li><a href="index2.php"><span>Accueil</span><i class="fa-solid fa-house"></i></a></li>
             <li><a href="cours.php"><span>Cours et Supports</span><i class="fa-solid fa-book-open"></i></a></li>
             <li><a href="outils.php"><span>Outils d'Étude</span><i class="fa-solid fa-screwdriver-wrench"></i></a></li>
-            <li><a href="#"><span>Calendrier et Rappels</span><i class="fa-solid fa-calendar"></i></a></li>
-            <li><a href="question_reponse.php"><span>Questions & Réponses</span><i class="fa-solid fa-comments"></i></a></li>
-            <li><a href="#"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
-            <li><a href="#"><span>Paramètres</span><i class="fa-solid fa-gear"></i></a></li>
+            <li><a href="taches.php"><span>À faire</span><i class="fa fa-tasks" aria-hidden="true"></i></a></li>
+            <li><a href="graphs.php"><span>Suivi et Progression</span><i class="fa-solid fa-chart-simple"></i></i></a></li>
+            <?php include "delete.php"; ?>
         </ul>
     </header>
     <div id="everything">
+        <?php 
+            $path = "register";
+            include "account_delete.php"; 
+        ?>        
         <nav id="navigation">
             <ul id="ul2">
                 <li><h1>EduTrack</h1></li>
                 <li>
                     <div id="divsearch">
-                        <input type="search" name="search" id="search123" placeholder="Recherche ...">
+                        <input type="search" id="search123" name="search" placeholder="Recherche ...">
                         <button id="searchbtn123" name="search"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </li>
                 <li>
-                    <a id="btninsc" href="?logout">Déconnexion</a>
+                    <a href="?logout" id="btninsc">Déconnexion</a>
                 </li>
             </ul>
         </nav>
         <div id="content">
-            <div id="search_div">
-            </div>
+
+            <input id="idclient" type="hidden" value="<?php echo $_SESSION['id_client'] ?>">
+            <div id="search_div"></div>
+
             <h1 id="bigtitle"> Accédez à tous les <span>outils</span> nécessaires pour réussir vos études.</h1>
             <div class="container">
                 <div class="cardsoutils">
-                    <h1>Flashcards<br><span> (Cartes mémoire)</span></h1>
-                    <i id="i1" class="fa-solid fa-copy"></i>
+                    <h1>Flashcards<i id="i1" class="fa-solid fa-copy"></i></h1>
                     <h2>Cartes question/réponse pour réviser</h2>
                     <a href="outils/flashcards.php">Cartes Mémoire<i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 <div class="cardsoutils">
-                    <h1>Calcul des Notes</h1>
-                    <i id="i2" class="fa-solid fa-pen-to-square"></i>
-                    <h2>Un clic pour connaître tes résultats.</h2>
-                    <a href="outils/calcul.php">Générer<i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-                <div class="cardsoutils">
-                    <h1>Pomodoro</h1>
-                    <i id="i3" class="fa-solid fa-stopwatch"></i>
-                    <h2>Le minuteur qui booste ta productivité.</h2>
-                    <a href="outils/taches.php">Minuteur<i class="fa-solid fa-arrow-right"></i></a>
+                    <h1>Calculatrice<i id="i3" class="fa-solid fa-calculator"></i></h1>
+                    <h2> Outil rapide pour vos calculs scolaires.</h2>
+                    <a href="outils/calculator.php">Calculatrice<i class="fa-solid fa-arrow-right"></i></a>
                 </div> 
             </div>        
         </div>
     </div>
     <script src="script.js"></script>
+
 </body>
 </html>

@@ -21,6 +21,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
     else if($data['action'] === 'search'){
         searchdata($data, $conn);
+    
     }
     else if($data['action'] === 'delete_carte'){
         deletecarte($data, $conn);

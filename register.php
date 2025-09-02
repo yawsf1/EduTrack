@@ -104,18 +104,25 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     $erreur = 'passwordincorrect';
                 }
                 else{
-                    $id = $user['Id_client'];
-                    session_regenerate_id(true);
-                    if(isset($_POST['remember2'])){
-                        setcookie('remember', $id, time() + 3600 * 24 * 7, "/", "", false, true);
+                    $id_user = $user['Id_client'];
+                    if(isset($_POST['remember2']) && $_POST['remember2'] == 1){
+                        $token = bin2hex(random_bytes(32));
+                        $token_hashed = hash('sha256' ,$token);
+                        $date_expire = date('Y-m-d H:i:s', time() + 3600 * 24 * 7);
+
+                        $stmt2 = $conn -> prepare('INSERT INTO tokens(token, expire_date, id_client) VALUES (?,?,?);');
+                        $stmt2 -> bind_param('ssi', $token_hashed, $date_expire,$id_user);
+                        if($stmt2 -> execute()){
+                            setcookie('remember', $token, time() + 3600 * 24 * 7, "/", "", false, true);
+                        }
                     }
-                    $_SESSION['id_client'] = $id;
+                    $_SESSION['id_client'] = $id_user;
                     $_SESSION['message'] = 'Vous vous êtes connectez avec succès.';
+                    session_regenerate_id(true);
                     unset($_SESSION['csrf']);
                     header('Location: index2.php?succes');
                     exit();
                 }
-
             }
         }
         if(isset($erreur)){
@@ -215,6 +222,16 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             exit();
         }
     }
+    if(isset($_POST['delete_account'])){
+        $stmt = $conn -> prepare("DELETE FROM client WHERE Id_client = ? ;");
+        $stmt -> bind_param("i", $_SESSION['id_client']);
+        if($stmt -> execute()){
+            $_SESSION['deleted'] = "Votre compte etre supprimer !";
+            session_unset();
+            session_destroy();
+            header("Location: index.php?account_deleted");
+            exit();
+        }
+    }
 }
-
 ?>
