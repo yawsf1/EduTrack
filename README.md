@@ -1,12 +1,12 @@
-EduTrack
-Description
+# EduTrack
+## Description
 
 EduTrack est une application web éducative développée en PHP, MySQL, HTML, CSS et JavaScript.
 Elle permet aux utilisateurs de gérer leurs cours, tâches, flashcards, et de suivre leurs statistiques personnelles via un tableau de bord interactif avec graphiques.
 
 Cette application combine pages PHP générées côté serveur et certaines fonctionnalités dynamiques côté client via AJAX et Chart.js.
 
-Fonctionnalités principales
+## Fonctionnalités principales
 
 Authentification sécurisée : inscription, connexion et gestion des sessions.
 
@@ -52,7 +52,7 @@ Structure du projet
 ├─ style.css       # CSS global
 └─ fichiers CSS pour chaque page
 
-Technologies utilisées
+## Technologies utilisées
 
 Langages : PHP, HTML, CSS, JavaScript
 
@@ -62,15 +62,15 @@ Bibliothèques : Chart.js pour les graphiques
 
 Communication client-serveur : Requêtes HTTP classiques + AJAX pour certaines interactions
 
-Installation et utilisation
+## Installation et utilisation
 
-Prérequis :
+### Prérequis :
 
 Serveur web local (ex. XAMPP, WAMP, MAMP) avec PHP et MySQL.
 
 Navigateur moderne (Chrome, Firefox, Edge).
 
-Installation :
+### Installation :
 
 Cloner le dépôt :
 
@@ -89,7 +89,7 @@ $username = 'root';
 $password = '';
 
 
-Utilisation :
+## Utilisation :
 
 Ouvrir le navigateur et accéder à :
 
