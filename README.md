@@ -78,7 +78,7 @@ Explorer les sections : Cours, Tâches, Flashcards, Outils, Statistiques.
 
 Les fichiers téléchargés sont stockés dans le dossier uploads/.
 
-Preuves et résultats
+## Preuves et résultats
 
 Application web fonctionnelle et interactive.
 
@@ -90,7 +90,7 @@ Messages flash et validations des données implémentés.
 
 Interface responsive adaptée aux écrans desktop et mobile.
 
-Contribution
+## Contribution
 
 Le projet est actuellement développé par Yawsf1.
 Pour contribuer ou proposer des améliorations, fork le dépôt et soumettre une pull request.
