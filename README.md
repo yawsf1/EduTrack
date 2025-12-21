@@ -28,30 +28,6 @@ Messages flash pour confirmations et alertes.
 
 Validation et sécurisation des données côté serveur et côté client.
 
-Structure du projet
-/EduTrack
-│
-├─ media/          # Images, icônes et médias utilisés
-├─ outils/         # Scripts et outils supplémentaires
-├─ uploads/        # Fichiers téléchargés par les utilisateurs
-├─ account_delete.php
-├─ api.php
-├─ calculator.php
-├─ cours.php
-├─ courscree.php
-├─ db.php          # Connexion à la base de données
-├─ delete.php
-├─ function.php    # Fonctions utilitaires
-├─ graphs.php
-├─ index.php
-├─ inscription.php
-├─ login.php
-├─ outils.php
-├─ register.php
-├─ script.js       # Scripts JavaScript globaux
-├─ style.css       # CSS global
-└─ fichiers CSS pour chaque page
-
 ## Technologies utilisées
 
 Langages : PHP, HTML, CSS, JavaScript
