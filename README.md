@@ -208,15 +208,14 @@ Edit `db.php`:
 ```php
 <?php
 $host = 'localhost';
-dbname = 'edutrack';
+$dbname = 'edutrack';
 $username = 'root';
-$password = '';  // Leave empty for XAMPP/WAMP default
+$password = '';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Connection Error: " . $e->getMessage());
+$conn = mysqli_connect($host, $username, $password, $dbname);
+
+if (!$conn) {
+    die("Connection Error: " . mysqli_connect_error());
 }
 ?>
 ```
