@@ -1,209 +1,209 @@
 # EduTrack
 
-A comprehensive educational management platform built with PHP, MySQL, HTML, CSS, and JavaScript.
+Une plateforme complète de gestion éducative construite avec PHP, MySQL, HTML, CSS et JavaScript.
 
-## 📋 Table of Contents
+## Table des matières
 
 - [Description](#description)
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Technology Stack](#technology-stack)
-- [Prerequisites](#prerequisites)
+- [Fonctionnalités](#fonctionnalités)
+- [Structure du projet](#structure-du-projet)
+- [Stack technique](#stack-technique)
+- [Prérequis](#prérequis)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Core Modules](#core-modules)
-- [Database](#database)
-- [Screenshots & Results](#screenshots--results)
-- [Contributing](#contributing)
+- [Utilisation](#utilisation)
+- [Modules principaux](#modules-principaux)
+- [Base de données](#base-de-données)
+- [Captures d'écran](#captures-décran--résultats)
+- [Contribuer](#contribuer)
 
 ---
 
-## 🎯 Description
+## Description
 
 EduTrack est une application web éducative complète qui permet aux utilisateurs de gérer leurs cours, tâches, flashcards, et de suivre leurs statistiques personnelles via un tableau de bord interactif avec graphiques en temps réel.
 
-**En résumé:** EduTrack est votre compagnon d'apprentissage ultime - une plateforme unifiée pour organiser vos études, suivre votre progression et accéder à des outils éducatifs intégrés.
+**En résumé :** EduTrack est votre compagnon d'apprentissage ultime — une plateforme unifiée pour organiser vos études, suivre votre progression et accéder à des outils éducatifs intégrés.
 
-## ✨ Features
+## Fonctionnalités
 
-### Core Functionality
-- **🔐 Authentification sécurisée** : Inscription, connexion et gestion des sessions
-- **📚 Gestion des cours** : Création, modification, suppression et suivi des cours
-- **✅ Gestionnaire de tâches** : Ajout, modification, suppression avec statuts
-- **🎴 Flashcards** : Apprentissage rapide et révision des concepts clés
-- **🧮 Calculatrice scientifique** : Outil mathématique intégré pour les calculs
-- **📊 Tableaux de bord interactifs** : Statistiques et graphiques en temps réel (Chart.js)
-- **🔍 Recherche globale** : Recherche instantanée dans les cours, tâches et flashcards
-- **📁 Gestion de fichiers** : Téléchargement et organisation de documents
-- **💬 Système Q&A** : Questions et réponses interactif
+### Fonctionnalités principales
+- ** Authentification sécurisée** : Inscription, connexion et gestion des sessions
+- ** Gestion des cours** : Création, modification, suppression et suivi des cours
+- ** Gestionnaire de tâches** : Ajout, modification, suppression avec statuts
+- ** Flashcards** : Apprentissage rapide et révision des concepts clés
+- ** Calculatrice scientifique** : Outil mathématique intégré pour les calculs
+- ** Tableaux de bord interactifs** : Statistiques et graphiques en temps réel (Chart.js)
+- ** Recherche globale** : Recherche instantanée dans les cours, tâches et flashcards
+- ** Gestion de fichiers** : Téléchargement et organisation de documents
+- ** Système Q&R** : Questions et réponses interactif
 
-### User Experience
-- **📱 Design responsive** : Parfaitement adapté aux mobiles, tablettes et desktops
-- **⚡ Messages flash** : Confirmations et alertes en temps réel
-- **🔒 Validation de données** : Sécurisation côté serveur et client
-- **🎨 Interface moderne** : Design intuitif et ergonomique
+### Expérience utilisateur
+- ** Design responsive** : Parfaitement adapté aux mobiles, tablettes et desktops
+- ** Messages flash** : Confirmations et alertes en temps réel
+- ** Validation des données** : Sécurisation côté serveur et côté client
+- ** Interface moderne** : Design intuitif et ergonomique
 
-## 📁 Project Structure
+## Structure du projet
 
 ```
 EduTrack/
 │
-├── 🔐 Authentication & Registration
-│   ├── index.php              # Login page
-│   ├── index2.php             # Main dashboard
-│   ├── login.php              # Login handler
-│   ├── register.php           # Registration page
-│   ├── inscription.php        # Registration processing
-│   ├── account_delete.php     # Account deletion
-│   └── inscconn.css           # Auth styling
+├── Authentification & Inscription
+│ ├── index.php # Page de connexion
+│ ├── index2.php # Tableau de bord principal
+│ ├── login.php # Traitement de la connexion
+│ ├── register.php # Page d'inscription
+│ ├── inscription.php # Traitement de l'inscription
+│ ├── account_delete.php # Suppression de compte
+│ └── inscconn.css # Styles d'authentification
 │
-├── 📚 Courses Management
-│   ├── cours.php              # Courses listing & details
-│   ├── cours.css              # Courses styling
-│   ├── courscree.php          # Course creation/editing
-│   ├── courscree.css          # Course creation styling
-│   └── [course files here]
+├── Gestion des cours
+│ ├── cours.php # Liste et détails des cours
+│ ├── cours.css # Styles des cours
+│ ├── courscree.php # Création/modification de cours
+│ ├── courscree.css # Styles de création de cours
+│ └── [fichiers de cours]
 │
-├── ✅ Tasks Management
-│   ├── taches.php             # Task management interface
-│   ├── taches.css             # Task styling
-│   └── delete.php             # Delete operations handler
+├── Gestion des tâches
+│ ├── taches.php # Interface de gestion des tâches
+│ ├── taches.css # Styles des tâches
+│ └── delete.php # Gestionnaire de suppression
 │
-├── 🧮 Tools & Utilities
-│   ├── calculator.php         # Scientific calculator
-│   ├── outils.php             # Tools hub page
-│   ├── outils.css             # Tools styling
-│   ├── outils/                # Tools subdirectory
-│   └── question_reponse.css   # Q&A styling
+├── Outils & Utilitaires
+│ ├── calculator.php # Calculatrice scientifique
+│ ├── outils.php # Hub des outils
+│ ├── outils.css # Styles des outils
+│ ├── outils/ # Sous-répertoire des outils
+│ └── question_reponse.css # Styles Q&R
 │
-├── 📊 Analytics & Visualization
-│   ├── graphs.php             # Performance graphs & analytics
-│   └── [chart data visualization]
+├── Analyses & Visualisation
+│ ├── graphs.php # Graphiques de performance & analytics
+│ └── [visualisation des données]
 │
-├── 🛠️ Core Backend
-│   ├── function.php           # Shared utility functions
-│   ├── api.php                # API endpoints
-│   ├── db.php                 # Database configuration
-│   └── [core logic]
+├── ️ Backend principal
+│ ├── function.php # Fonctions utilitaires partagées
+│ ├── api.php # Points d'API
+│ ├── db.php # Configuration base de données
+│ └── [logique principale]
 │
-├── 🎨 Frontend Assets
-│   ├── script.js              # Client-side JavaScript
-│   ├── style.css              # Global styling
-│   └── [additional CSS files]
+├── Assets frontend
+│ ├── script.js # JavaScript côté client
+│ ├── style.css # Styles globaux
+│ └── [fichiers CSS additionnels]
 │
-├── 📦 Data Storage
-│   ├── media/                 # Media assets directory
-│   ├── uploads/               # User uploads directory
-│   └── [user generated files]
+├── Stockage des données
+│ ├── media/ # Répertoire des médias
+│ ├── uploads/ # Répertoire des fichiers uploadés
+│ └── [fichiers générés par les utilisateurs]
 │
-└── README.md                  # This file
+└── README.md # Ce fichier
 ```
 
-## 🛠️ Technology Stack
+## ️ Stack technique
 
-| Category | Technologies |
-|----------|---------------|
+| Catégorie | Technologies |
+|-----------|-------------|
 | **Backend** | PHP 7.4+ |
-| **Database** | MySQL / MariaDB |
+| **Base de données** | MySQL / MariaDB |
 | **Frontend** | HTML5, CSS3, JavaScript (ES6+) |
-| **Libraries** | Chart.js (graphiques), AJAX |
-| **Server** | Apache/Nginx with mod_rewrite |
-| **Communication** | HTTP requests + AJAX for dynamic interactions |
+| **Bibliothèques** | Chart.js (graphiques) |
+| **Serveur** | Apache/Nginx avec mod_rewrite |
+| **Communication** | Requêtes HTTP |
 
-## 💻 Prerequisites
+## Prérequis
 
-Before you begin, ensure you have the following installed:
+Avant de commencer, assurez-vous d'avoir installé :
 
-- **PHP** 7.4 or higher
-- **MySQL** 5.7+ or **MariaDB** 10.3+
-- **Web Server** (Apache with mod_rewrite, Nginx, or equivalent)
-- **Local Development Environment** (XAMPP, WAMP, MAMP, or similar)
-- **Modern Web Browser** (Chrome, Firefox, Safari, Edge)
+- **PHP** 7.4 ou supérieur
+- **MySQL** 5.7+ ou **MariaDB** 10.3+
+- **Serveur web** (Apache avec mod_rewrite, Nginx ou équivalent)
+- **Environnement de développement local** (XAMPP, WAMP, MAMP ou similaire)
+- **Navigateur web moderne** (Chrome, Firefox, Safari, Edge)
 
-## 📦 Installation
+## Installation
 
-### Step 1: Clone the Repository
+### Étape 1 : Cloner le dépôt
 
 ```bash
 git clone https://github.com/yawsf1/EduTrack.git
 cd EduTrack
 ```
 
-### Step 2: Set Up Your Local Server
+### Étape 2 : Configurer votre serveur local
 
-**For XAMPP:**
+**Pour XAMPP :**
 ```bash
-# Copy EduTrack folder to:
-C:\xampp\htdocs\EduTrack  # Windows
-/Applications/XAMPP/htdocs/EduTrack  # macOS
-/opt/lampp/htdocs/EduTrack  # Linux
+# Copiez le dossier EduTrack dans :
+C:\xampp\htdocs\EduTrack # Windows
+/Applications/XAMPP/htdocs/EduTrack # macOS
+/opt/lampp/htdocs/EduTrack # Linux
 ```
 
-**For WAMP:**
+**Pour WAMP :**
 ```bash
-# Copy to: C:\wamp\www\EduTrack
+# Copiez dans : C:\wamp\www\EduTrack
 ```
 
-**For MAMP:**
+**Pour MAMP :**
 ```bash
-# Copy to: /Applications/MAMP/htdocs/EduTrack
+# Copiez dans : /Applications/MAMP/htdocs/EduTrack
 ```
 
-### Step 3: Create Database
+### Étape 3 : Créer la base de données
 
-1. Open **phpMyAdmin** (usually at `http://localhost/phpmyadmin`)
-2. Create a new database named `edutrack`
-3. Import the SQL schema (if provided):
-   - Go to Import tab
-   - Select the SQL file
-   - Click Import
+1. Ouvrez **phpMyAdmin** (généralement sur `http://localhost/phpmyadmin`)
+2. Créez une nouvelle base de données nommée `edutrack`
+3. Importez le schéma SQL (si fourni) :
+- Allez dans l'onglet Import
+- Sélectionnez le fichier SQL
+- Cliquez sur Importer
 
-**Or manually create tables using:**
+**Ou créez les tables manuellement :**
 ```sql
 CREATE DATABASE IF NOT EXISTS edutrack;
 USE edutrack;
 
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(100) NOT NULL UNIQUE,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+id INT AUTO_INCREMENT PRIMARY KEY,
+username VARCHAR(100) NOT NULL UNIQUE,
+email VARCHAR(100) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE courses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+id INT AUTO_INCREMENT PRIMARY KEY,
+user_id INT NOT NULL,
+title VARCHAR(255) NOT NULL,
+description TEXT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE tasks (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    status ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
-    due_date DATE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+id INT AUTO_INCREMENT PRIMARY KEY,
+user_id INT NOT NULL,
+title VARCHAR(255) NOT NULL,
+description TEXT,
+status ENUM('pending', 'in_progress', 'completed') DEFAULT 'pending',
+due_date DATE,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE flashcards (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    question VARCHAR(500) NOT NULL,
-    answer TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+id INT AUTO_INCREMENT PRIMARY KEY,
+user_id INT NOT NULL,
+question VARCHAR(500) NOT NULL,
+answer TEXT NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+FOREIGN KEY (user_id) REFERENCES users(id)
 );
 ```
 
-### Step 4: Configure Database Connection
+### Étape 4 : Configurer la connexion à la base de données
 
-Edit `db.php`:
+Modifiez `db.php` :
 
 ```php
 <?php
@@ -215,233 +215,233 @@ $password = '';
 $conn = mysqli_connect($host, $username, $password, $dbname);
 
 if (!$conn) {
-    die("Connection Error: " . mysqli_connect_error());
+die("Erreur de connexion : " . mysqli_connect_error());
 }
 ?>
 ```
 
-### Step 5: Set File Permissions
+### Étape 5 : Définir les permissions des fichiers
 
 ```bash
-# Ensure uploads and media directories are writable
+# Assurez-vous que les répertoires uploads et media sont accessibles en écriture
 chmod 755 uploads/
 chmod 755 media/
 ```
 
-### Step 6: Start Your Server & Access Application
+### Étape 6 : Démarrer le serveur et accéder à l'application
 
-- **Start XAMPP/WAMP/MAMP** control panel and enable Apache & MySQL
-- Open your browser and navigate to:
-  ```
-  http://localhost/EduTrack/index.php
-  ```
-
-## 🚀 Usage
-
-### 1. User Registration & Login
+- **Démarrez XAMPP/WAMP/MAMP** et activez Apache & MySQL
+- Ouvrez votre navigateur et accédez à :
 ```
-1. Navigate to http://localhost/EduTrack/index.php
-2. Click "S'inscrire" (Register) or use existing credentials
-3. Fill in username, email, and password
-4. Click "Connexion" (Login) to access your dashboard
+http://localhost/EduTrack/index.php
 ```
 
-### 2. Dashboard Overview
-After login, you'll see:
-- **📊 Statistics Dashboard**: Your learning progress overview
-- **📚 Courses Section**: All your enrolled courses
-- **✅ Tasks Section**: Your pending and completed tasks
-- **🎴 Flashcards Section**: Study materials
-- **🧮 Tools Section**: Access to calculator, Q&A, and other utilities
+## Utilisation
 
-### 3. Managing Courses
+### 1. Inscription & Connexion
 ```
-- Click "Cours" (Courses) in the navigation
-- Click "+ Ajouter un cours" to create a new course
-- Fill in course details and save
-- Edit or delete existing courses as needed
+1. Accédez à http://localhost/EduTrack/index.php
+2. Cliquez sur "S'inscrire" ou utilisez des identifiants existants
+3. Remplissez le nom d'utilisateur, l'email et le mot de passe
+4. Cliquez sur "Connexion" pour accéder à votre tableau de bord
 ```
 
-### 4. Task Management
-```
-- Go to "Tâches" (Tasks) section
-- Create new tasks with titles, descriptions, and due dates
-- Mark tasks as pending, in progress, or completed
-- Track your productivity with task statistics
-```
+### 2. Aperçu du tableau de bord
+Après connexion, vous verrez :
+- ** Tableau de bord statistiques** : Vue d'ensemble de votre progression
+- ** Section Cours** : Tous vos cours
+- ** Section Tâches** : Vos tâches en cours et terminées
+- ** Section Flashcards** : Vos supports d'étude
+- ** Section Outils** : Accès à la calculatrice, Q&R et autres utilitaires
 
-### 5. Using the Calculator
+### 3. Gestion des cours
 ```
-- Access from "Outils" (Tools) menu
-- Perform mathematical calculations
-- Supports scientific functions and operations
-```
-
-### 6. Viewing Analytics
-```
-- Go to "Statistiques" (Statistics)
-- View real-time charts and graphs
-- Track your learning progress over time
+- Cliquez sur "Cours" dans la navigation
+- Cliquez sur "+ Ajouter un cours" pour créer un nouveau cours
+- Remplissez les détails du cours et sauvegardez
+- Modifiez ou supprimez les cours existants selon vos besoins
 ```
 
-### 7. File Management
+### 4. Gestion des tâches
 ```
-- Upload course materials and documents
-- Files are stored in the uploads/ directory
-- Organize and download files as needed
+- Accédez à la section "Tâches"
+- Créez de nouvelles tâches avec titres, descriptions et dates d'échéance
+- Marquez les tâches comme en attente, en cours ou terminées
+- Suivez votre productivité avec les statistiques de tâches
 ```
 
-## 🔧 Core Modules
-
-### `db.php` - Database Configuration
-Handles all database connections and credentials.
-
-### `function.php` - Utility Functions
-Contains reusable functions throughout the application:
-- User authentication helpers
-- Data validation
-- Session management
-- Common operations
-
-### `api.php` - API Endpoints
-Provides dynamic endpoints for:
-- AJAX requests
-- Data retrieval
-- Real-time updates
-- Client-server communication
-
-### `graphs.php` - Analytics Module
-Generates and displays:
-- Performance charts (Chart.js)
-- Learning progress visualization
-- Statistical analysis
-- Trend tracking
-
-### `calculator.php` - Scientific Calculator
-Features:
-- Basic arithmetic operations
-- Scientific functions (sin, cos, log, etc.)
-- Memory functions
-- Calculation history
-
-### `delete.php` - Data Deletion Handler
-Safely handles deletion of:
-- Courses
-- Tasks
-- Files
-- User data
-
-### Authentication Files
-- `login.php` - Validates credentials and manages sessions
-- `register.php` / `inscription.php` - User registration processing
-- `account_delete.php` - Account management and deletion
-
-### Course Management
-- `cours.php` - Display and list courses
-- `courscree.php` - Create and edit course content
-
-### Task Management
-- `taches.php` - Complete task management interface with filtering and sorting
-
-## 🗄️ Database Schema
-
-**Users Table**
+### 5. Utilisation de la calculatrice
 ```
-- id (INT, PRIMARY KEY)
+- Accessible depuis le menu "Outils"
+- Effectuez des calculs mathématiques
+- Supporte les fonctions scientifiques et opérations avancées
+```
+
+### 6. Consultation des analyses
+```
+- Accédez à "Statistiques"
+- Visualisez des graphiques et tableaux en temps réel
+- Suivez votre progression d'apprentissage dans le temps
+```
+
+### 7. Gestion des fichiers
+```
+- Uploadez des supports de cours et documents
+- Les fichiers sont stockés dans le répertoire uploads/
+- Organisez et téléchargez vos fichiers selon vos besoins
+```
+
+## Modules principaux
+
+### `db.php` — Configuration de la base de données
+Gère toutes les connexions et identifiants de la base de données.
+
+### `function.php` — Fonctions utilitaires
+Contient des fonctions réutilisables dans toute l'application :
+- Helpers d'authentification
+- Validation des données
+- Gestion des sessions
+- Opérations communes
+
+### `api.php` — Points d'API
+Fournit des endpoints dynamiques pour :
+- Les requêtes AJAX
+- La récupération de données
+- Les mises à jour en temps réel
+- La communication client-serveur
+
+### `graphs.php` — Module d'analyse
+Génère et affiche :
+- Graphiques de performance (Chart.js)
+- Visualisation de la progression d'apprentissage
+- Analyses statistiques
+- Suivi des tendances
+
+### `calculator.php` — Calculatrice scientifique
+Fonctionnalités :
+- Opérations arithmétiques de base
+- Fonctions scientifiques (sin, cos, log, etc.)
+- Fonctions mémoire
+- Historique des calculs
+
+### `delete.php` — Gestionnaire de suppression
+Gère en toute sécurité la suppression de :
+- Cours
+- Tâches
+- Fichiers
+- Données utilisateur
+
+### Fichiers d'authentification
+- `login.php` — Valide les identifiants et gère les sessions
+- `register.php` / `inscription.php` — Traitement de l'inscription
+- `account_delete.php` — Gestion et suppression de compte
+
+### Gestion des cours
+- `cours.php` — Affichage et liste des cours
+- `courscree.php` — Création et modification du contenu des cours
+
+### Gestion des tâches
+- `taches.php` — Interface complète de gestion des tâches avec filtrage et tri
+
+## ️ Schéma de la base de données
+
+**Table users**
+```
+- id (INT, CLÉ PRIMAIRE)
 - username (VARCHAR, UNIQUE)
 - email (VARCHAR, UNIQUE)
-- password (VARCHAR, hashed)
+- password (VARCHAR, hashé)
 - created_at (TIMESTAMP)
 ```
 
-**Courses Table**
+**Table courses**
 ```
-- id (INT, PRIMARY KEY)
-- user_id (INT, FOREIGN KEY)
+- id (INT, CLÉ PRIMAIRE)
+- user_id (INT, CLÉ ÉTRANGÈRE)
 - title (VARCHAR)
 - description (TEXT)
 - created_at (TIMESTAMP)
 ```
 
-**Tasks Table**
+**Table tasks**
 ```
-- id (INT, PRIMARY KEY)
-- user_id (INT, FOREIGN KEY)
+- id (INT, CLÉ PRIMAIRE)
+- user_id (INT, CLÉ ÉTRANGÈRE)
 - title (VARCHAR)
 - description (TEXT)
-- status (ENUM: pending, in_progress, completed)
+- status (ENUM : pending, in_progress, completed)
 - due_date (DATE)
 - created_at (TIMESTAMP)
 ```
 
-**Flashcards Table**
+**Table flashcards**
 ```
-- id (INT, PRIMARY KEY)
-- user_id (INT, FOREIGN KEY)
+- id (INT, CLÉ PRIMAIRE)
+- user_id (INT, CLÉ ÉTRANGÈRE)
 - question (VARCHAR)
 - answer (TEXT)
 - created_at (TIMESTAMP)
 ```
 
-## 📊 Screenshots & Results
+## Captures d'écran & Résultats
 
-### ✅ What's Implemented
+### Ce qui est implémenté
 
-- ✨ **Fully Functional Web Application** - Complete and interactive platform
-- 🗄️ **MySQL Database** - Organized schema with all necessary tables
-- 📊 **Interactive Dashboards** - Real-time charts and statistics with Chart.js
-- 💬 **Flash Messages** - User confirmations and alerts
-- 📱 **Responsive Design** - Seamless experience on desktop and mobile devices
-- 🔒 **Data Validation** - Both server-side and client-side validation
-- 🎨 **Modern UI** - Clean, intuitive, and professional interface
-- 🚀 **Performance** - Optimized loading and responsive interactions
+- **Application web entièrement fonctionnelle** — Plateforme complète et interactive
+- ️ **Base de données MySQL** — Schéma organisé avec toutes les tables nécessaires
+- **Tableaux de bord interactifs** — Graphiques et statistiques en temps réel avec Chart.js
+- **Messages flash** — Confirmations et alertes utilisateur
+- **Design responsive** — Expérience fluide sur desktop et mobile
+- **Validation des données** — Validation côté serveur et côté client
+- **Interface moderne** — Design propre, intuitif et professionnel
+- **Performance** — Chargement optimisé et interactions réactives
 
-## 🤝 Contributing
+## Contribuer
 
-We welcome contributions! To contribute to EduTrack:
+Les contributions sont les bienvenues ! Pour contribuer à EduTrack :
 
-1. **Fork** the repository
-2. **Create** a feature branch
-   ```bash
-   git checkout -b feature/YourFeatureName
-   ```
-3. **Commit** your changes
-   ```bash
-   git commit -m "Add YourFeatureName"
-   ```
-4. **Push** to your fork
-   ```bash
-   git push origin feature/YourFeatureName
-   ```
-5. **Open** a Pull Request on the main repository
+1. **Forkez** le dépôt
+2. **Créez** une branche pour votre fonctionnalité
+```bash
+git checkout -b feature/NomDeLaFonctionnalite
+```
+3. **Commitez** vos modifications
+```bash
+git commit -m "Ajout de NomDeLaFonctionnalite"
+```
+4. **Poussez** vers votre fork
+```bash
+git push origin feature/NomDeLaFonctionnalite
+```
+5. **Ouvrez** une Pull Request sur le dépôt principal
 
-### Contribution Guidelines
-- Follow PHP PSR-12 coding standards
-- Add comments for complex logic
-- Test your changes thoroughly
-- Update documentation as needed
+### Directives de contribution
+- Respectez les standards de codage PHP PSR-12
+- Ajoutez des commentaires pour la logique complexe
+- Testez soigneusement vos modifications
+- Mettez à jour la documentation si nécessaire
 
-## 📝 License
+## Licence
 
-This project is currently unlicensed. Please contact the repository owner for licensing information.
+Ce projet est actuellement sans licence. Veuillez contacter le propriétaire du dépôt pour toute information relative à la licence.
 
-## 📧 Support & Contact
+## Support & Contact
 
-For issues, questions, or suggestions:
-- 📌 Open an **Issue** on GitHub
-- 💬 Create a **Discussion** for questions
-- 🐛 Report **Bugs** with detailed information
+Pour les problèmes, questions ou suggestions :
+- Ouvrez une **Issue** sur GitHub
+- Créez une **Discussion** pour vos questions
+- Signalez les **Bugs** avec des informations détaillées
 
 ---
 
-## 🎓 About This Project
+## À propos du projet
 
 **EduTrack** représente une solution complète de gestion éducative conçue pour les étudiants et les enseignants. Elle combine des fonctionnalités essentielles telles que le suivi des cours, la gestion des tâches et des outils d'apprentissage intégrés en une seule plateforme unifiée.
 
-**Developed by:** [Yawsf1](https://github.com/yawsf1)  
-**Repository:** [yawsf1/EduTrack](https://github.com/yawsf1/EduTrack)  
-**Last Updated:** 2026-03-08 17:01:00
+**Développé par :** [Yawsf1](https://github.com/yawsf1) 
+**Dépôt :** [yawsf1/EduTrack](https://github.com/yawsf1/EduTrack) 
+**Dernière mise à jour :** 2026-03-08
 
 ---
 
-**Happy Learning! 📚✨**
+**Bonne apprentissage ! **
